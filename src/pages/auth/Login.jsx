@@ -4,7 +4,7 @@ import { toastr } from '../../utils/toastr.js';
 import swal from 'sweetalert2';
 
 import Logo from '../../components/logo';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [active, setActive] = useState('');
@@ -189,12 +189,9 @@ const Login = () => {
           {/* form */}
           <div className='pt-5'>
             <span className='text-black'>Don't have a Tokopedia account? </span>
-            <a
-              href='/pages/register-seller.html'
-              className='text-decoration-none text-danger'
-            >
+            <Link to='/register' className='text-decoration-none text-danger'>
               Register
-            </a>
+            </Link>
           </div>
         </main>
       </div>
