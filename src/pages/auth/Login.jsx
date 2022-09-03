@@ -7,6 +7,9 @@ import Logo from '../../components/logo';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  useEffect(() => {
+    document.title = 'Tukushop-Login';
+  }, []);
   const [active, setActive] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();

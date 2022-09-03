@@ -5,6 +5,9 @@ import FormRegisterCustomer from '../../components/auth/formRegister/customer';
 import FormRegisterSeller from '../../components/auth/formRegister/seller';
 
 const Register = () => {
+  useEffect(() => {
+    document.title = 'Tukushop-Register';
+  }, []);
   const [active, setActive] = useState('');
   const [loading, setLoading] = useState(false);
   useEffect(() => {

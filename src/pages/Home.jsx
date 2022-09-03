@@ -1,9 +1,13 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import Product from '../components/Card/Product';
 import Category from '../components/Carousel/Category';
 import Promo from '../components/Carousel/Promo';
 
 const Home = () => {
+  useEffect(() => {
+    document.title = 'Tukushop-Home';
+  }, []);
+
   return (
     <Fragment>
       <div
@@ -27,7 +31,7 @@ const Home = () => {
         {/* new product */}
         <section className='container mb-4'>
           <h3 className=''>New</h3>
-          <span class='text-secondary'>You’ve never seen it before!</span>
+          <span className='text-secondary'>You’ve never seen it before!</span>
           <div className='row mt-4 d-flex justify-content-center'>
             {/* card here  */}
             <Product />

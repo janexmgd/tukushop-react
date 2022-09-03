@@ -7,7 +7,7 @@ const Product = () => {
   return (
     <Fragment>
       <Link
-        to='product/99'
+        to='/product/99'
         className='col-lg-3 col-md-6 col-sm-12 pb-3 text-reset text-decoration-none'
       >
         <div className='border shadow rounded'>
@@ -17,7 +17,7 @@ const Product = () => {
             className='card-img-top w-100'
             style={{ width: '100%' }}
           />
-          <div className='card-body d-flex flex-column'>
+          <div className='card-body d-flex flex-column ms-2'>
             <span className='card-text text-black'>
               Men's formal suit - Black & White
             </span>
