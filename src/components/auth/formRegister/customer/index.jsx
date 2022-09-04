@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import swal from 'sweetalert2';
+import { toastr } from '../../../../utils/toastr';
+
 const FormRegisterCustomer = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     name: '',
@@ -16,7 +21,34 @@ const FormRegisterCustomer = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log(form);
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/auth/register-buyer`, form)
+      .then((res) => {
+        swal
+          .fire({
+            title: 'Success!',
+            text: res.data.message,
+            icon: 'success',
+          })
+          .then(() => {
+            navigate('/login');
+          });
+      })
+      .catch((err) => {
+        if (err.response.data.message === 'failed in validation') {
+          const error = err.response.data.error;
+          error.map((e) => toastr(e, 'error'));
+        } else {
+          swal.fire({
+            title: 'Error!',
+            text: err.response.data.message,
+            icon: 'error',
+          });
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
   return (
     <div>
@@ -65,13 +97,28 @@ const FormRegisterCustomer = () => {
             Forgot password?
           </a>
         </div>
-        <button
-          type='submit'
-          className='btn btn-danger mt-3'
-          style={{ width: '400px', borderRadius: '25px' }}
-        >
-          Submit
-        </button>
+        {loading ? (
+          <button
+            type='submit'
+            className='btn btn-danger mt-3'
+            style={{ width: '400px', borderRadius: '25px' }}
+            disabled
+          >
+            <span
+              className='spinner-border spinner-border-sm'
+              role='status'
+              aria-hidden='true'
+            />
+          </button>
+        ) : (
+          <button
+            type='submit'
+            className='btn btn-danger mt-3'
+            style={{ width: '400px', borderRadius: '25px' }}
+          >
+            Submit
+          </button>
+        )}
       </form>
       <div className='pt-5 mb-3'>
         <span className='text-black'>Already have a Tokopedia account? </span>

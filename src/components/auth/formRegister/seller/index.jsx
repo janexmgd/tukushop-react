@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import swal from 'sweetalert2';
+import { toastr } from '../../../../utils/toastr';
+
 const FormRegisterSeller = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     name: '',
@@ -18,7 +23,34 @@ const FormRegisterSeller = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log(form);
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/auth/register-seller`, form)
+      .then((res) => {
+        swal
+          .fire({
+            title: 'Success!',
+            text: res.data.message,
+            icon: 'success',
+          })
+          .then(() => {
+            navigate('/login');
+          });
+      })
+      .catch((err) => {
+        if (err.response.data.message === 'failed in validation') {
+          const error = err.response.data.error;
+          error.map((e) => toastr(e, 'error'));
+        } else {
+          swal.fire({
+            title: 'Error!',
+            text: err.response.data.message,
+            icon: 'error',
+          });
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
   return (
     <div>
